@@ -1,0 +1,23 @@
+.navbar {
+    background-color: #646cff;
+    margin: 0;
+    color: white;
+}
+
+ul {
+    height: 75px;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+li {
+    list-style-type: none;
+    float: left;
+}
+
+li a {
+    display: inline-block;
+    color: white;
+    padding-top: 24px;
+    padding-right: 25px;
+}
