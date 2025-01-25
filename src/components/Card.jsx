@@ -1,12 +1,7 @@
-import img from '../assets/image2.png';
 import '../styles/card.css';
+import PropTypes from 'prop-types';
 
-const Card2 = () => {
-
-    const name = 'Eva Smith';
-    const title = 'UX Designer';
-    const email = 'b@b.com';
-
+const Card = ({img, name, title, email}) => {
     return (
         <div className="profile-card">
             <div className="profile-card__image">
@@ -21,4 +16,10 @@ const Card2 = () => {
     );
 }
 
-export default Card2;
+Card.propTypes = {
+    img: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    email: PropTypes.string.isRequired
+}
+export default Card;

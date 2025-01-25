@@ -1,23 +1,29 @@
 .navbar {
-    background-color: #646cff;
-    margin: 0;
-    color: white;
-}
+    background-color: var(--secondary-background-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &.section {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
 
-ul {
-    height: 75px;
-    padding-top: 0;
-    margin-top: 0;
-}
+    ul {
+        display: flex;
+        align-items: center;
+        list-style: none;
+        padding-left: 0;
 
-li {
-    list-style-type: none;
-    float: left;
-}
+        li {
+            margin-right: 1rem;
 
-li a {
-    display: inline-block;
-    color: white;
-    padding-top: 24px;
-    padding-right: 25px;
+            a {
+                color: var(--button-text-color);
+            }
+
+            a:hover {
+                color: var(--link-hover-color);
+            }
+        }
+    }
 }

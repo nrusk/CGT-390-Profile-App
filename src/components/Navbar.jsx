@@ -1,11 +1,8 @@
-import React from 'react';
-import "../App.css";
-import '../styles/global.css';
 import '../styles/navbar.css';
 
 const Navbar = () => {
     return (
-        <nav className="navbar">
+        <nav className="navbar section">
             <ul>
                 <li>
                     <a href="#">Home</a>

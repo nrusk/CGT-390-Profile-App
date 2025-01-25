@@ -1,31 +1,55 @@
 import "./App.css";
-import './styles/global.css';
 import About from "./components/About";
 import Navbar from "./components/Navbar";
-import Card1 from "./components/Card1";
-import Card2 from "./components/Card2";
+import image1 from "./assets/image1.png";
+import image2 from "./assets/image2.png";
+import Card from "./components/Card";
+import Wrapper from "./components/Wrapper";
+import { useState } from "react";
 
 const App = () => {
+  const profiles = [
+    {
+      img: image1,
+      name:'John Doe',
+      title:'Software Engineer',
+      email:'a@a.com'
+    },
+    {
+      img: image2,
+      name:'Eva Smith',
+      title:'UX Designer',
+      email:'b@b.com'
+    },
+  ];
+
+const [clicked, setClicked] = useState(false);
+const handleClick = () => {
+  setClicked(!clicked);
+};
+
   return (
     <>
       <header>
         <Navbar />
       </header>
       <main>
-        <div className="section">
-          <div className="container">
+        <Wrapper>
           <h1>Profile App</h1>
-          </div>
-        </div>
-        <div className="section">
-          <div className="container">
+          <button onClick={handleClick}>
+            {clicked ? "Click me" : "Clicked"}
+          </button>
+        </Wrapper>
+        <Wrapper>
           <About />
-          </div>
+        </Wrapper>
+        <Wrapper>
+          <div className="profile-cards">
+            {profiles.map((profile) => (
+              <Card key={profile.email} {...profile} />
+              ))}
         </div>
-          <div className="container2">
-          <Card1 />
-          <Card2 />
-        </div>
+        </Wrapper>
       </main>
     </>
   );
