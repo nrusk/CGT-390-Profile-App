@@ -6,6 +6,8 @@ import image2 from "./assets/image2.png";
 import Card from "./components/Card";
 import Wrapper from "./components/Wrapper";
 import { useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const App = () => {
   const profiles = [
@@ -47,6 +49,20 @@ const App = () => {
     },
   ];
 
+  //variable to store the animation state
+  const [animation, setAnimation] = useState(false);
+  //function to update the animation state
+  const handleAnimation = () => {
+    setAnimation(false);
+  };
+
+  //variable to store the mode state
+  const [mode, setMode] = useState("light");
+  //function to update the animation state
+  const handleModeChange = () => {
+    setMode(mode === "light" ? "dark" : "light");
+  };
+
   //get titles
   const titles = [...new Set(profiles.map((profile) => profile.title))];
 
@@ -54,18 +70,21 @@ const App = () => {
   //update title on change of the dropdown
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
+    setAnimation(true);
   };
 
   const [search, setSearch] = useState("");
   //update the search on change of input
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
+    setAnimation(true);
   };
 
   //clear title and search
   const handleClear = () => {
     setTitle("");
     setSearch("");
+    setAnimation(true);
   };
 
   //filter the profiles based on the title
@@ -75,12 +94,16 @@ const App = () => {
       profile.name.toLowerCase().includes(search.toLowerCase())
   );
 
+  const buttonStyle = {
+    border: "1px solid #ccc",
+  };
+
   return (
     <>
       <header>
-        <Navbar />
+        <Navbar mode={mode} updateMode={handleModeChange}/>
       </header>
-      <main>
+      <main className={mode === "light" ? "light" : "dark"}>
         <Wrapper>
           <h1>Profile App</h1>
         </Wrapper>
@@ -117,11 +140,19 @@ const App = () => {
                 value={search}
               />
             </div>
-                <button onClick={handleClear}>Clear</button>
+            <button onClick={handleClear} style={buttonStyle}>
+              <span className="sr-only">Reset</span>
+              <FontAwesomeIcon icon={faXmark} />
+            </button>
           </div>
           <div className="profile-cards">
             {filterProfiles.map((profile) => (
-              <Card key={profile.email} {...profile} />
+              <Card
+                key={profile.email}
+                {...profile}
+                animate={animation}
+                updateAnimate={handleAnimation}
+              />
             ))}
           </div>
         </Wrapper>

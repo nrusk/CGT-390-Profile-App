@@ -3,10 +3,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    &.section {
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-    }
+    padding: 1rem 4rem;
 
     ul {
         display: flex;
@@ -16,6 +13,7 @@
 
         li {
             margin-right: 1rem;
+            margin-bottom: 0;
 
             a {
                 color: var(--button-text-color);
@@ -25,5 +23,21 @@
                 color: var(--link-hover-color);
             }
         }
+    }
+
+    button {
+        margin-bottom: 0;
+    }
+}
+
+@media screen and (max-width: var(--tablet)) {
+    .navbar {
+        padding: 1rem 1.5rem;
+    }
+}
+
+@media screen and (max--width: var(--mobile)) {
+    .navbar {
+        padding: 1rem;
     }
 }

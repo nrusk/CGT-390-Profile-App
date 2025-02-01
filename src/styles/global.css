@@ -8,7 +8,30 @@ body {
     padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+main {
+    height: 100%;
+    min-height: 100vh;
+    &.dark {
+        background-color: var(--dark-background-color);
+        color: var(--dark-text-color);
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p {
+            color: var(--dark-text-color);
+        }
+    }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: var(--text-color);
     font-family: var(--font-family);
     margin-bottom: 0.625rem;
@@ -81,6 +104,15 @@ li {
 .container {
     max-width: 1200px;
     margin: 0 auto;
+}
+
+.sr-only {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
 }
 
 /*tablet styles*/
@@ -164,7 +196,8 @@ li {
         font-size: 0.9rem;
     }
 
-    ul, ol {
+    ul,
+    ol {
         padding-left: 1.125rem;
     }
 
@@ -189,35 +222,39 @@ li {
     }
 
     /*button*/
-    .button {
+    button {
         background-color: var(--button-background-color);
         color: var(--button-text-color);
         border: none;
-        border-radius: var(--bordr-radius);
+        border-radius: var(--border-radius);
         padding: 0.5rem 1rem;
         cursor: pointer;
         transition: background-color 0.3s, color 0.3s;
     }
 
-    .button:hover {
+    /* .button:hover {
         background-color: var(--button-hover-background-color);
         color: var(--button-hover-text-color);
-    }
+    } */
 
      /*filters*/
      .filter-wrapper {
         display: flex;
+        flex-wrap: wrap;
         justify-content: flex-start;
         align-items: center;
         margin-bottom: 1.5rem;
      }
 
-     .filter--search, .filter--select, button {
+     .filter--search,
+     .filter--select,
+     button {
         margin-right: 0.5rem;
         margin-bottom: 0.5rem;
      }
 
-     select, input {
+     select,
+     input {
         padding: 0.5rem;
         font-size: 1rem;
      }
