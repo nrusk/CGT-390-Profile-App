@@ -12,6 +12,7 @@ body {
     --button-text-color: #ffffff;
     --button-hover-background-color: var(--primary-background-color);
     --button-hover-text-color: #191a1a;
+    --button-border-color: #ccc;
     --link-color: #646cff;
     --link-hover-color: var(--text-color);
 
