@@ -9,46 +9,59 @@ import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import ProfileForm from "./components/ProfileForm";
+import { useEffect } from "react";
+import { use } from "react";
 
 const App = () => {
-  const profiles = [
-    {
-      img: image1,
-      name:'John Doe',
-      title:'Software Engineer',
-      email:'a@a.com'
-    },
-    {
-      img: image2,
-      name:'Lily Smith',
-      title:'UX Designer',
-      email:'b@b.com'
-    },
-    {
-      img: image1,
-      name:'Bob Johnson',
-      title:'Web Developer',
-      email:'c@c.com'
-    },
-    {
-      img: image2,
-      name:'Ava Smith',
-      title:'Web Developer',
-      email:'d@d.com'
-    },
-    {
-      img: image1,
-      name:'Tom Smith',
-      title:'Software Engineer',
-      email:'e@e.com'
-    },
-    {
-      img: image2,
-      name:'Eva Smith',
-      title:'Graphic Designer',
-      email:'f@f.com'
-    },
-  ];
+  // const profiles = [
+  //   {
+  //     img: image1,
+  //     name:'John Doe',
+  //     title:'Software Engineer',
+  //     email:'a@a.com'
+  //   },
+  //   {
+  //     img: image2,
+  //     name:'Lily Smith',
+  //     title:'UX Designer',
+  //     email:'b@b.com'
+  //   },
+  //   {
+  //     img: image1,
+  //     name:'Bob Johnson',
+  //     title:'Web Developer',
+  //     email:'c@c.com'
+  //   },
+  //   {
+  //     img: image2,
+  //     name:'Ava Smith',
+  //     title:'Web Developer',
+  //     email:'d@d.com'
+  //   },
+  //   {
+  //     img: image1,
+  //     name:'Tom Smith',
+  //     title:'Software Engineer',
+  //     email:'e@e.com'
+  //   },
+  //   {
+  //     img: image2,
+  //     name:'Eva Smith',
+  //     title:'Graphic Designer',
+  //     email:'f@f.com'
+  //   },
+  // ];
+
+  //use effect
+  const [profiles, setProfiles] = useState([]);
+  useEffect(() => {
+          fetch("https://web.ics.purdue.edu/~nrusk/profile-app/fetch-data.php")
+              .then(res => res.json())
+              .then(data => {
+                setProfiles(data);
+                console.log(data);
+              })
+      }, []);
 
   //variable to store the animation state
   const [animation, setAnimation] = useState(false);
@@ -152,7 +165,7 @@ const App = () => {
           <div className="profile-cards">
             {filterProfiles.map((profile) => (
               <Card
-                key={profile.email}
+                key={profile.id}
                 {...profile}
                 animate={animation}
                 updateAnimate={handleAnimation}
