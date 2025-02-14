@@ -7,10 +7,9 @@ import Card from "./components/Card";
 import Wrapper from "./components/Wrapper";
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import ProfileForm from "./components/ProfileForm";
 import { useEffect } from "react";
-import { use } from "react";
 
 const App = () => {
   // const profiles = [
@@ -52,61 +51,57 @@ const App = () => {
   //   },
   // ];
 
-  //use effect
-  const [profiles, setProfiles] = useState([]);
-  useEffect(() => {
-          fetch("https://web.ics.purdue.edu/~nrusk/profile-app/fetch-data.php")
-              .then(res => res.json())
-              .then(data => {
-                setProfiles(data);
-                console.log(data);
-              })
-      }, []);
-
-  //variable to store the animation state
-  const [animation, setAnimation] = useState(false);
-  //function to update the animation state
-  const handleAnimation = () => {
-    setAnimation(false);
-  };
-
   //variable to store the mode state
   const [mode, setMode] = useState("light");
-  //function to update the animation state
+  //function to update the mode state
   const handleModeChange = () => {
     setMode(mode === "light" ? "dark" : "light");
   };
 
   //get titles
-  const titles = [...new Set(profiles.map((profile) => profile.title))];
+  const [titles, setTitles] = useState([]);
+  useEffect(() => {
+    fetch("https://web.ics.purdue.edu/~nrusk/profile-app/get-titles.php")
+      .then((res) => res.json())
+      .then((data) => {
+          setTitles(data.titles);
+      })
+  }, [])
 
   const [title, setTitle] = useState("");
   //update title on change of the dropdown
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
-    setAnimation(true);
+    setPage(1);
   };
 
   const [search, setSearch] = useState("");
   //update the search on change of input
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
-    setAnimation(true);
+    setPage(1);
   };
+
+  const [profiles, setProfiles] = useState([]);
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(1);
+
+  useEffect(() => {
+    fetch(`https://web.ics.purdue.edu/~nrusk/profile-app/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10`)
+        .then((res) => res.json())
+        .then((data) => {
+          setProfiles(data.profiles);
+          setCount(data.count);
+          setPage(data.page);
+        })
+  }, [title, search, page]);
 
   //clear title and search
   const handleClear = () => {
     setTitle("");
     setSearch("");
-    setAnimation(true);
+    setPage(1);
   };
-
-  //filter the profiles based on the title
-  const filterProfiles = profiles.filter(
-    (profile) => 
-      (title === "" || profile.title === title) &&
-      profile.name.toLowerCase().includes(search.toLowerCase())
-  );
 
   const buttonStyle = {
     border: "1px solid #ccc",
@@ -163,15 +158,31 @@ const App = () => {
             </button>
           </div>
           <div className="profile-cards">
-            {filterProfiles.map((profile) => (
+            {profiles.map((profile) => (
               <Card
                 key={profile.id}
                 {...profile}
-                animate={animation}
-                updateAnimate={handleAnimation}
               />
             ))}
           </div>
+
+          {
+            count === 0 && <p>No profiles found!</p>
+          }
+          {count > 10 &&
+          <div className="pagination">
+            <button onClick={() => setPage(page - 1)} disabled={page === 1}>
+              <span className="sr-only">Previous</span>
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </button>
+            <span>{page}/{Math.ceil(count/10)}</span>
+            <button onClick={() => setPage(page + 1)} disabled={page >= Math.ceil(count/10)}>
+              <span className="sr-only">Next</span>
+              <FontAwesomeIcon icon={faChevronRight} />
+            </button>
+          </div>
+          }
+
         </Wrapper>
       </main>
     </>
@@ -179,3 +190,10 @@ const App = () => {
 };
 
 export default App;
+
+  // //filter the profiles based on the title
+  // const filterProfiles = profiles.filter(
+  //   (profile) => 
+  //     (title === "" || profile.title === title) &&
+  //     profile.name.toLowerCase().includes(search.toLowerCase())
+  // );
