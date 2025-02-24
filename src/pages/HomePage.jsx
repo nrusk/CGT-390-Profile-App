@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { useEffect } from "react";
 import styles from "../styles/home.module.css";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
 
@@ -16,12 +17,12 @@ const HomePage = () => {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(1);
  
-  //variable to store the mode state
-  const [mode, setMode] = useState("light");
-  //function to update the mode state
-  const handleModeChange = () => {
-    setMode(mode === "light" ? "dark" : "light");
-  };
+  // //variable to store the mode state
+  // const [mode, setMode] = useState("light");
+  // //function to update the mode state
+  // const handleModeChange = () => {
+  //   setMode(mode === "light" ? "dark" : "light");
+  // };
 
   //get titles
   useEffect(() => {
@@ -97,7 +98,9 @@ const HomePage = () => {
       </div>
       <div className={styles["profile-cards"]}>
         {profiles.map((profile) => (
+          <Link to={`profile/${profile.id}`} key={profile.id}>
           <Card key={profile.id} {...profile} />
+          </Link>
         ))}
       </div>
       {count === 0 && <p>No profiles found!</p>}

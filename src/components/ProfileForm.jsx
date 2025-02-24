@@ -1,8 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import style from "../styles/ProfileForm.module.css";
+import { useNavigate } from "react-router-dom";
 
-const ProfileForm = () => {
+const ProfileForm = ({ isEdit = false, currentProfile = {} }) => {
+    const navigate = useNavigate();
     const [data, setData] = useState({ name: "", title: "", email: "", bio: "", image: null });
+
+    useEffect(() => {
+        if (isEdit) {
+            setData({
+                name: currentProfile.name || "",
+                title: currentProfile.title || "",
+                email: currentProfile.email || "",
+                bio: currentProfile.bio || "",
+                image: null,
+            });
+        }
+    }, [currentProfile, isEdit]);
+
     const [errors, setErrors] = useState({ image: "", general: "" });
     const [submitting, setSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
@@ -20,12 +35,13 @@ const ProfileForm = () => {
         } else {
             setData({ ...data, [e.target.name]: e.target.value });
         }
-        
     };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmitting(true);
         const formData = new FormData();
+        formData.append("id", currentProfile.id || "");
         formData.append("name", data.name.trim());
         formData.append("email", data.email.trim());
         formData.append("title", data.title.trim());
@@ -33,7 +49,7 @@ const ProfileForm = () => {
         if (data.image) formData.append("image", data.image);
         console.log(data.image+"test");
         try {
-            const response = await fetch("https://web.ics.purdue.edu/~nrusk/profile-app/send-data.php", {
+            const response = await fetch("https://web.ics.purdue.edu/~nrusk/profile-app/send-data-with-id.php", {
                 method: "POST",
                 body: formData,
             });
@@ -45,19 +61,18 @@ const ProfileForm = () => {
                 setTimeout(() => {
                     setSuccessMessage("");
                 }, 1000);
-
+                isEdit && navigate(-1);
             } else {
                 setErrors({image: "", general: result.message});
                 setSuccessMessage("");
             }
-
         } catch (error) {
             setErrors({image: "", general: error});
         } finally {
             setSubmitting(false);
         }
-
     };
+
     return (
         <form onSubmit={handleSubmit} className={style["profile-form"]}>
             <input 
@@ -92,11 +107,21 @@ const ProfileForm = () => {
                 value={data.bio}
                 onChange={handleChange} 
             ></textarea>
-        <p>{data.bio.length}/200</p>
+            <p>{data.bio.length}/200</p>
             <label htmlFor="image">Choose a profile picture:</label>
                 <input type="file" id="image" name="image" accept="image/png, image/jpeg, img/jpg, image/gif" onChange={handleChange}/>
                 {errors.image && <p className={style['error']}>{errors.image}</p>}
-            <button type="submit" disabled={submitting || errors.image !== "" || data.name.trim() === "" || data.email.trim() === "" || data.title.trim() === "" || data.bio.trim() === "" || data.image === null? true: false}>Submit</button>
+            <button 
+                    type="submit" 
+                    disabled={
+                    submitting || 
+                    errors.image !== "" || 
+                    data.name.trim() === "" || 
+                    data.email.trim() === "" || 
+                    data.title.trim() === "" || 
+                    data.bio.trim() === "" || 
+                    (!isEdit && !data.image)}
+            >Submit</button>
                 {errors.general && <p className={style['error']}>{errors.general}</p>}
                 {successMessage && <p className={style['success']}>{successMessage}</p>}
         </form>

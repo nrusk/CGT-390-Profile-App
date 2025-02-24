@@ -17,7 +17,6 @@
     text-align: center;
     width: 200px;
     box-shadow: var(--box-shadow);
-    height: 100%;
     margin: 0.75rem;
     &.is-entering {
         opacity: 0;
