@@ -10,20 +10,17 @@ import ProfileIndexPage from "./pages/ProfileIndexPage";
 import { useState } from "react";
 import { useEffect } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
+import { ModeContext } from "./contexts/ModeContext";
+import { useContext } from "react";
 
 const App = () => {
 
-  //variable to store the mode state
-  const [mode, setMode] = useState("light");
-  //function to update the mode state
-  const handleModeChange = () => {
-    setMode(mode === "light" ? "dark" : "light");
-  };
+  const {mode} = useContext(ModeContext);
 
   return (
     <HashRouter>
       <header>
-        <Navbar mode={mode} updateMode={handleModeChange}/>
+        <Navbar/>
       </header>
       <main className={mode === "light" ? "light" : "dark"}>
         <Routes>
