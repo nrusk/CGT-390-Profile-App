@@ -23,6 +23,9 @@ main {
         p {
             color: var(--dark-text-color);
         }
+        a:hover {
+            color: var(--dark-link-hover-color);
+        }
     }
 }
 
