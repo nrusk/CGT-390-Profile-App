@@ -3,12 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import ModeContext from "../contexts/ModeContext";
 import { useContext } from "react";
 import AuthContext from "../contexts/AuthContext";
+import { useMode } from "../contexts/ModeContext";
 
 const Navbar = () => {
-    const { mode, handleModeChange } = useContext(ModeContext);
+    const { mode, handleModeChange } = useMode();
     const { isLogin, logout } = useContext(AuthContext);
     const navigate = useNavigate();
-    const handleClick= () => {
+    const handleClick = () => {
         logout();
         navigate("/login");
     }

@@ -14,10 +14,11 @@ import ModeContext from "./contexts/ModeContext";
 import { useContext } from "react";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { useMode } from "./contexts/ModeContext";
 
 const App = () => {
 
-  const {mode} = useContext(ModeContext);
+  const {mode} = useMode();
 
   return (
     <AuthProvider>

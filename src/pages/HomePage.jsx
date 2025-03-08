@@ -7,6 +7,7 @@ import { useEffect, useReducer } from "react";
 import styles from "../styles/home.module.css";
 import { Link } from "react-router-dom";
 import { initialState, homeReducer } from "../reducers/homeReducer";
+import useHomePage from "../hooks/homePageHook";
 
 const HomePage = () => {
 
@@ -17,7 +18,7 @@ const HomePage = () => {
   // const [profiles, setProfiles] = useState([]);
   // const [page, setPage] = useState(1);
   // const [count, setCount] = useState(1);
-  const [state, dispatch] = useReducer(homeReducer, initialState);
+  const {state, dispatch} = useHomePage();
   const { titles, title, search, profiles, page, count } = state;
  
   // //variable to store the mode state
@@ -27,15 +28,15 @@ const HomePage = () => {
   //   setMode(mode === "light" ? "dark" : "light");
   // };
 
-  //get titles
-  useEffect(() => {
-    fetch("https://web.ics.purdue.edu/~nrusk/profile-app/get-titles.php")
-      .then((res) => res.json())
-      .then((data) => {
-          // setTitles(data.titles);
-          dispatch({ type: "SET_TITLES", payload: data.titles });
-      })
-  }, [])
+  // //get titles
+  // useEffect(() => {
+  //   fetch("https://web.ics.purdue.edu/~nrusk/profile-app/get-titles.php")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //         // setTitles(data.titles);
+  //         dispatch({ type: "SET_TITLES", payload: data.titles });
+  //     })
+  // }, [])
 
   //update title on change of the dropdown
   const handleTitleChange = (event) => {
@@ -51,24 +52,24 @@ const HomePage = () => {
     dispatch({ type: "SET_SEARCH", payload: event.target.value });
   };
 
-  //fetch data from server
-  useEffect(() => {
-    fetch(`https://web.ics.purdue.edu/~nrusk/profile-app/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10`)
-        .then((res) => res.json())
-        .then((data) => {
-          // setProfiles(data.profiles);
-          // setCount(data.count);
-          // setPage(data.page);
-          dispatch({ type: "FETCH_DATA", payload: data });
-        })
-  }, [title, search, page]);
+  // //fetch data from server
+  // useEffect(() => {
+  //   fetch(`https://web.ics.purdue.edu/~nrusk/profile-app/fetch-data-with-filter.php?title=${title}&name=${search}&page=${page}&limit=10`)
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         // setProfiles(data.profiles);
+  //         // setCount(data.count);
+  //         // setPage(data.page);
+  //         dispatch({ type: "FETCH_DATA", payload: data });
+  //       })
+  // }, [title, search, page]);
 
   //clear title and search
   const handleClear = () => {
     // setTitle("");
     // setSearch("");
     // setPage(1);
-    dispatch({ type: "CLEAR_FILTERS" });
+    dispatch({ type: "CLEAR_FILTER" });
   };
 
   const buttonStyle = {

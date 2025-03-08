@@ -16,7 +16,7 @@ export const homeReducer = (state, action) => {
         case "SET_TITLE":
             return {
                 ...state,
-                titles: action.payload,
+                title: action.payload,
                 page: 1,
             }
         case "SET_SEARCH":

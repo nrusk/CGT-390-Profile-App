@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 
 const AuthContext = createContext();
 
@@ -35,6 +35,8 @@ export const AuthProvider = ({children}) => {
     )
 };
 export default AuthContext;
+
+export const useAuth = () => useContext(AuthContext);
 
 // const [mode, setMode] = useState('light');
 //     const toggleMode = () => {
