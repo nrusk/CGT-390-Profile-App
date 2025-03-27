@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect, memo } from "react";
 import style from "../styles/ProfileForm.module.css";
 import { useNavigate } from "react-router-dom";
 import useLocalStorage from "../useLocalStorage";
@@ -117,7 +117,7 @@ const ProfileForm = ({ isEdit = false, currentProfile = {} }) => {
                 value={data.bio}
                 onChange={handleChange} 
             ></textarea>
-            <p>{data.bio.length}/200</p>
+            <p className={style["profile-text"]}>{data.bio.length}/200</p>
             <label htmlFor="image">Choose a profile picture:</label>
                 <input type="file" id="image" name="image" accept="image/png, image/jpeg, img/jpg, image/gif" onChange={handleChange}/>
                 {errors.image && <p className={style['error']}>{errors.image}</p>}

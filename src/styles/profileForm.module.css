@@ -71,7 +71,12 @@
         margin-top: 10px;
         text-align: center;
     }
+
+    p.profile-text, label, input {
+        color: var(--text-color)
+    }
 }
+
 @media screen and (max-width: varr(--mobile)) {
     .profile-form {
         padding: 20px;

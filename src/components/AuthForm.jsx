@@ -87,7 +87,8 @@ const AuthForm = ({isRegister = false}) => {
                     type="email"
                     name="email"
                     placeholder="Email"
-                    requiredvalue={data.email}
+                    required
+                    value={data.email}
                     onChange={handleChange}
                 />
             )}
