@@ -53,7 +53,7 @@ const App = () => {
         <iframe
           src="https://nrusk.github.io/Chatbot/"
           title="Chatbot 9000"
-          style={{ position: "fixed", top: "400px", right: "0px", width: "290px", height: "500px", border: "none", zIndex: 1000 }}
+          style={{ position: "fixed", top: "400px", right: "0px", width: "290px", height: "590px", border: "none", zIndex: 1000 }}
           >
         </iframe>
       </main>
