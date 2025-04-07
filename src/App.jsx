@@ -32,6 +32,7 @@ const App = () => {
         <Navbar/>
       </header>
       <main className={mode === "light" ? "light" : "dark"}>
+
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
@@ -48,6 +49,13 @@ const App = () => {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+
+        <iframe
+          src="https://nrusk.github.io/Chatbot/"
+          title="Chatbot 9000"
+          style={{ position: "fixed", top: "400px", right: "0px", width: "290px", height: "500px", border: "none", zIndex: 1000 }}
+          >
+        </iframe>
       </main>
     </HashRouter>
     </AuthProvider>
